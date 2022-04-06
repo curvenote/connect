@@ -1,0 +1,46 @@
+{
+  "name": "@curvenote/connect",
+  "version": "0.0.1",
+  "description": "Communicate with iframes the want to render Jupyter outputs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w -p .",
+    "build:watch": "npm run watch",
+    "compile": "npm run clean && tsc -p .",
+    "lint": "eslint \"src/**/*.ts\" -c ./.eslintrc.js",
+    "lint:format": "npx prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint:format:fix": "npx prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "clean": "rm -rf dist",
+    "test": "jest --config=jest.config.js --env=node --detectOpenHandles --forceExit --verbose",
+    "test:dev": "jest --config=jest.config.js --env=node --detectOpenHandles",
+    "test:watch": "jest --config=jest.config.js --watchAll --env=node --detectOpenHandles"
+  },
+  "keywords": [
+    "curvenote",
+    "connect",
+    "interactive",
+    "redux",
+    "jupyter"
+  ],
+  "author": "Steve Purves",
+  "license": "MIT",
+  "dependencies": {
+    "@jupyterlab/nbformat": "^3.3.2",
+    "redux": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "jest": "^27.5.1",
+    "prettier": "^2.6.2",
+    "ts-jest": "^27.1.4",
+    "typescript": "^4.6.3"
+  }
+}
