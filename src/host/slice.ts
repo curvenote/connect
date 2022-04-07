@@ -8,17 +8,15 @@ import type { AnyAction } from 'redux';
 /*
     A redux slice for use in the host page.
 */
-
-export interface IFrameState {
+export interface HostStateItem {
   ready: boolean;
   height: number | null;
-  width: number | null;
   error: boolean;
   message?: string;
 }
 
 export interface HostState {
-  [id: string]: IFrameState;
+  [id: string]: HostStateItem;
 }
 
 export function reducer(state: HostState = {}, action: AnyAction) {
@@ -31,14 +29,13 @@ export function reducer(state: HostState = {}, action: AnyAction) {
         [id]: {
           ready: true,
           height: null,
-          width: null,
           error: false,
         },
       };
     }
     case CONNECT_IFRAME_SEND_SIZE: {
       const { id, width, height } = action.payload;
-      if (state[id] && state[id].width === width && state[id].height === height) return state;
+      if (state[id] && state[id].height === height) return state;
       return {
         ...state,
         [id]: {
@@ -67,11 +64,7 @@ export function reducer(state: HostState = {}, action: AnyAction) {
 
 export const selectors = {
   selectIFrameReady: (state: HostState, id: string) => state[id] && state[id].ready,
-  selectIFrameSize: (state: HostState, id: string) => {
-    if (!state[id]) return { width: null, height: null };
-    const { width, height } = state[id];
-    return { width, height };
-  },
+  selectIFrameSize: (state: HostState, id: string) => state[id] && state[id].height,
   selectIFrameFailed: (state: HostState, id: string) =>
     state[id] && state[id].error && { message: state[id].message },
 };

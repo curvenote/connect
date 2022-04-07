@@ -1,12 +1,12 @@
-import type { IOutput } from "@jupyterlab/nbformat";
-import type { AnyAction } from "redux";
+import type { IOutput } from '@jupyterlab/nbformat';
+import type { AnyAction } from 'redux';
 
 export interface Config {
   origin: string;
 }
 
 export interface HostSendContentAction extends AnyAction {
-  type: "CONNECT_HOST_SEND_CONTENT";
+  type: 'CONNECT_HOST_SEND_CONTENT';
   payload: {
     id: string;
     outputs: IOutput[];
@@ -14,23 +14,22 @@ export interface HostSendContentAction extends AnyAction {
 }
 
 export interface IFrameSendSizeAction extends AnyAction {
-  type: "CONNECT_IFRAME_SEND_SIZE";
+  type: 'CONNECT_IFRAME_SEND_SIZE';
   payload: {
     id: string;
-    width: number;
     height: number;
   };
 }
 
 export interface IFrameSendReadyAction extends AnyAction {
-  type: "CONNECT_IFRAME_SEND_READY";
+  type: 'CONNECT_IFRAME_SEND_READY';
   payload: {
     id: string;
   };
 }
 
 export interface IFrameSendFailedAction extends AnyAction {
-  type: "CONNECT_IFRAME_SEND_FAILED";
+  type: 'CONNECT_IFRAME_SEND_FAILED';
   payload: {
     id: string;
     message: string;

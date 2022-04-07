@@ -34,16 +34,14 @@ export function connectHostSendContent(id: string, outputs: IOutput[]) {
  * Once rendering iscomplete, and the iframe page has been resized, this action will be sent to the host
  *
  * @param id
- * @param width
  * @param height
  * @returns
  */
-export function connectIFrameSendSize(id: string, width: number, height: number) {
+export function connectIFrameSendSize(id: string, height: number) {
   return {
     type: CONNECT_IFRAME_SEND_SIZE,
     payload: {
       id,
-      width,
       height,
     },
   };

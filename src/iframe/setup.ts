@@ -73,7 +73,6 @@ export function registerIFrameListener(config: Config, store: Store, renderer: I
  * @returns
  */
 export function registerIFrameResizeObserver(store: Store, document: Document) {
-  const SCROLLBAR_SPACING = 20;
   let resizeObserver: ResizeObserver | null = null;
 
   document.addEventListener('DOMContentLoaded', (event) => {
@@ -85,12 +84,9 @@ export function registerIFrameResizeObserver(store: Store, document: Document) {
     }
     resizeObserver = new window.ResizeObserver(([el]) => {
       // TODO can we use a selector here to get a better idea of the size?
-      const { width, height } = el.contentRect;
+      const { height } = el.contentRect;
       const renderReady = isRenderingComplete(store.getState());
-      if (renderReady)
-        commsDispatch(
-          connectIFrameSendSize(window.name, width, Math.ceil(height) + SCROLLBAR_SPACING),
-        );
+      if (renderReady) commsDispatch(connectIFrameSendSize(window.name, Math.ceil(height)));
     });
     resizeObserver.observe(document.body);
     commsDispatch(connectIFrameSendReady(window.name));

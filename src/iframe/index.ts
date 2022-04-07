@@ -10,6 +10,8 @@ import {
   renderStart,
 } from './slice';
 
+export { IFrameState } from './slice';
+
 export default {
   commsDispatch,
   reducer,
