@@ -1,7 +1,7 @@
 {
   "name": "@curvenote/connect",
-  "version": "0.0.1",
-  "description": "Communicate with iframes the want to render Jupyter outputs",
+  "version": "0.0.2",
+  "description": "Communicate with iframes that want to render Jupyter outputs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "directories": {
@@ -10,6 +10,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w -p .",
