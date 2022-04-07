@@ -1,4 +1,4 @@
-export * as actions from "./actions";
-export * as types from "./types";
-export * as iframe from "./iframe";
-export * as host from "./host";
+export * as actions from './actions';
+export * as types from './types';
+export { default as iframe } from './iframe';
+export { default as host } from './host';

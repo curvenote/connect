@@ -1,59 +1,42 @@
-import type { Store, AnyAction } from "redux";
+import type { Store, AnyAction } from 'redux';
 import {
   CONNECT_IFRAME_SEND_FAILED,
   CONNECT_IFRAME_SEND_READY,
   CONNECT_IFRAME_SEND_SIZE,
-} from "../actions";
-import { IFrameSendFailedAction, IFrameSendSizeAction } from "../types";
-import {
-  ReceiveIFrameFailedFn,
-  ReceiveIFrameReadyFn,
-  ReceiveIFrameSizeFn,
-} from "./types";
+} from '../actions';
 
-export function registerHostListener(
-  store: Store,
-  handlers: {
-    ready: ReceiveIFrameReadyFn;
-    size: ReceiveIFrameSizeFn;
-    failed: ReceiveIFrameFailedFn;
-  }
-) {
+/**
+ * registerHostListener - register a listener for the host page
+ *
+ * On receiving post message from one of potentially many iframes, this function will dispatch
+ * the same action to the host store.
+ *
+ * @param store the host page redux store, this is passed to the handler functions
+ * @returns
+ */
+export function registerHostListener(store: Store) {
   function receiveMessage(event: MessageEvent) {
     const action = event.data as AnyAction;
-    const iframe = document.getElementsByName(
-      action.payload?.id
-    )[0] as HTMLIFrameElement;
+    const iframe = document.getElementsByName(action.payload?.id)[0] as HTMLIFrameElement;
     if (
       !action.payload ||
       iframe == null ||
-      !(event.origin === "null" && event.source === iframe.contentWindow)
+      !(event.origin === 'null' && event.source === iframe.contentWindow)
     ) {
       return;
     }
-    if (typeof action.payload === "object") {
+    if (typeof action.payload === 'object') {
       switch (action.type) {
-        case CONNECT_IFRAME_SEND_READY: {
-          const { id } = (action as IFrameSendSizeAction).payload;
-          handlers.ready(store, { id });
+        case CONNECT_IFRAME_SEND_READY:
+        case CONNECT_IFRAME_SEND_SIZE:
+        case CONNECT_IFRAME_SEND_FAILED:
+          store.dispatch(action);
           break;
-        }
-        case CONNECT_IFRAME_SEND_SIZE: {
-          const { id, width, height } = (action as IFrameSendSizeAction)
-            .payload;
-          handlers.size(store, { id, width, height });
-          break;
-        }
-        case CONNECT_IFRAME_SEND_FAILED: {
-          const { id, message } = (action as IFrameSendFailedAction).payload;
-          handlers.failed(store, { id, message });
-          break;
-        }
         default:
           console.error(`Unknown action type: ${action.type}`);
       }
     }
   }
-  window.addEventListener("message", receiveMessage);
-  return () => window.removeEventListener("message", receiveMessage);
+  window.addEventListener('message', receiveMessage);
+  return () => window.removeEventListener('message', receiveMessage);
 }

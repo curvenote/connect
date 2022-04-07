@@ -1,5 +1,5 @@
-import { commsDispatch } from "./comms";
-import { registerIFrameListener, registerIFrameResizeObserver } from "./setup";
+import { commsDispatch } from './comms';
+import { registerIFrameListener, registerIFrameResizeObserver } from './setup';
 import {
   isRendering,
   isRenderingComplete,
@@ -8,7 +8,7 @@ import {
   renderComplete,
   renderFailed,
   renderStart,
-} from "./slice";
+} from './slice';
 
 export default {
   commsDispatch,

@@ -1,4 +1,9 @@
-import type { AnyAction } from "redux";
+import type { AnyAction } from 'redux';
+
+/**
+ * The IFrame slice deals with internal state of the iframe page.
+ * The state or actions are never used in communication with the host.
+ */
 
 export interface IFrameState {
   rendering: boolean;
@@ -6,9 +11,9 @@ export interface IFrameState {
   failed: boolean;
 }
 
-const CONNECT_RENDER_START = "CONNECT_RENDER_START";
-const CONNECT_RENDER_COMPLETE = "CONNECT_RENDER_COMPLETE";
-const CONNECT_RENDER_FAILED = "CONNECT_RENDER_FAILED";
+const CONNECT_RENDER_START = 'CONNECT_RENDER_START';
+const CONNECT_RENDER_COMPLETE = 'CONNECT_RENDER_COMPLETE';
+const CONNECT_RENDER_FAILED = 'CONNECT_RENDER_FAILED';
 
 export function renderStart(): AnyAction {
   return {
@@ -29,8 +34,7 @@ export function renderFailed(): AnyAction {
 }
 
 export const isRendering = (state: IFrameState): boolean => state.rendering;
-export const isRenderingComplete = (state: IFrameState): boolean =>
-  state.complete;
+export const isRenderingComplete = (state: IFrameState): boolean => state.complete;
 export const isRenderingFailed = (state: IFrameState): boolean => state.failed;
 
 const initialState = {
