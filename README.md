@@ -6,15 +6,13 @@ Communicate with webpages in iframes that want to receive Jupyter notebook outpu
 
 Include an `iframe` with the following attributes (examples here use React):
 
-```html
+```tsx
 <iframe
-  id="{uid}"
-  name="{uid}"
-  title="{title}"
-  src="{url}"
-  height="{height"
-  ??
-  150}
+  id={uid}
+  name={uid}
+  title={title}
+  src={url}
+  height={height ?? 150}
   sandbox="allow-scripts"
 />
 ```
@@ -49,10 +47,13 @@ import { host, actions } from '@curvenote/connect';
 
 ...
 
-host.commsDispatch(iframeRef.current, actions.connectHostSendContent(uid, data));
+host.commsDispatch(
+  iframeRef.current,
+  actions.connectHostSendContent(uid, data)
+);
 ```
 
-## In the iframe page
+## In the `iframe` page
 
 Similarly the `iframe.reducer` should be added to the Redux store for the page
 
@@ -62,7 +63,7 @@ import { iframe } from '@curvenote/connect';
 const store = createStore(iframe.reducer, applyMiddleware(thunkMiddleware));
 ```
 
-And two listener functions are registered:
+And two listener/observer functions are registered:
 
 ```typescript
 iframe.registerMessageListener(
