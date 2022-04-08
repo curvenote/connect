@@ -31,8 +31,7 @@
     "curvenote",
     "connect",
     "interactive",
-    "redux",
-    "jupyter"
+    "redux"
   ],
   "repository": {
     "type": "git",
