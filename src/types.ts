@@ -1,4 +1,3 @@
-import type { IOutput } from '@jupyterlab/nbformat';
 import type { AnyAction } from 'redux';
 
 export interface Config {
@@ -9,7 +8,7 @@ export interface HostSendContentAction extends AnyAction {
   type: 'CONNECT_HOST_SEND_CONTENT';
   payload: {
     id: string;
-    outputs: IOutput[];
+    content: any;
   };
 }
 
@@ -36,4 +35,4 @@ export interface IFrameSendFailedAction extends AnyAction {
   };
 }
 
-export type IOutputRenderFn = (el: HTMLElement, outputs: IOutput[]) => void;
+export type ContentRenderFn = (el: HTMLElement, content: any) => void;

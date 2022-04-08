@@ -1,5 +1,5 @@
 import type { Store, AnyAction } from 'redux';
-import { Config, IOutputRenderFn } from '../types';
+import { Config, ContentRenderFn, HostSendContentAction } from '../types';
 import {
   connectIFrameSendFailed,
   connectIFrameSendReady,
@@ -20,10 +20,10 @@ import { renderStart, renderComplete } from './slice';
  *
  * @param config specifies the origin at build time
  * @param store the redux store of the iframe page
- * @param renderer a function that will render outputs in the iframe
+ * @param renderer a function that will render content in the iframe
  * @returns
  */
-export function registerIFrameListener(config: Config, store: Store, renderer: IOutputRenderFn) {
+export function registerIFrameListener(config: Config, store: Store, renderer: ContentRenderFn) {
   async function receiveMessage(event: MessageEvent) {
     if (event.origin !== config.origin && !isLocalHost(event.origin)) {
       return;
@@ -33,10 +33,11 @@ export function registerIFrameListener(config: Config, store: Store, renderer: I
       switch (action.type) {
         case CONNECT_HOST_SEND_CONTENT:
           {
-            const { outputs } = action.payload;
+            console.error('received CONNECT_HOST_SEND_CONTENT action', action);
+            const { content } = (action as HostSendContentAction).payload;
             try {
               store.dispatch(renderStart());
-              renderer(document.body, outputs);
+              renderer(document.body, content);
               store.dispatch(renderComplete());
               // NOTE: resize observer is responsible for sending size
             } catch (err) {
@@ -56,7 +57,7 @@ export function registerIFrameListener(config: Config, store: Store, renderer: I
           break;
         default:
           // eslint-disable-next-line no-console
-          console.log(`Unknown action type: ${action.type}`);
+          console.warn(`Unknown action type: ${action.type}`);
       }
     }
   }
@@ -78,9 +79,9 @@ export function registerIFrameResizeObserver(store: Store, document: Document) {
   document.addEventListener('DOMContentLoaded', (event) => {
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
-      console.log('iframe: DOM fully loaded and parsed');
+      console.debug('curvenote/connect iframe: DOM fully loaded and parsed');
       // eslint-disable-next-line no-console
-      console.log('iframe: sending READY...');
+      console.debug('curvenote/connect iframe: sending READY...');
     }
     resizeObserver = new window.ResizeObserver(([el]) => {
       // TODO can we use a selector here to get a better idea of the size?
@@ -90,7 +91,7 @@ export function registerIFrameResizeObserver(store: Store, document: Document) {
     });
     resizeObserver.observe(document.body);
     commsDispatch(connectIFrameSendReady(window.name));
-    console.log(`iframe: ready ${window.name ?? '<no window name>'}`);
+    console.debug(`curvenote/connect iframe: ready ${window.name ?? '<no window name>'}`);
   });
 
   return () => resizeObserver?.disconnect();

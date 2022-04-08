@@ -1,6 +1,6 @@
 # curvenote/connect
 
-Communicate with webpages in iframes that want to receive Jupyter notebook outputs
+Communicate with webpages in iframes that want to receive content to render
 
 ## In a host page
 

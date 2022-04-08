@@ -1,5 +1,3 @@
-import { IOutput } from '@jupyterlab/nbformat';
-
 /**
  * These actions are used in communication between the host and the iframe.
  */
@@ -12,18 +10,18 @@ export const CONNECT_IFRAME_SEND_FAILED = 'CONNECT_IFRAME_SEND_FAILED';
 /**
  * connectHostSendContent - action creator
  *
- * Sent by the host with IOutput[] content and will trigger a render when received by the iframe
+ * Sent by the host with any content and will trigger a render when received by the iframe
  *
  * @param id
- * @param outputs
+ * @param content
  * @returns
  */
-export function connectHostSendContent(id: string, outputs: IOutput[]) {
+export function connectHostSendContent(id: string, content: any) {
   return {
     type: CONNECT_HOST_SEND_CONTENT,
     payload: {
       id,
-      outputs,
+      content,
     },
   };
 }
