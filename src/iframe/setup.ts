@@ -33,7 +33,7 @@ export function registerIFrameListener(config: Config, store: Store, renderer: C
       switch (action.type) {
         case CONNECT_HOST_SEND_CONTENT:
           {
-            console.error('received CONNECT_HOST_SEND_CONTENT action', action);
+            console.debug('received CONNECT_HOST_SEND_CONTENT action', action);
             const { content } = (action as HostSendContentAction).payload;
             try {
               store.dispatch(renderStart());
