@@ -25,9 +25,6 @@ import { renderStart, renderComplete } from './slice';
  */
 export function registerIFrameListener(config: Config, store: Store, renderer: ContentRenderFn) {
   async function receiveMessage(event: MessageEvent) {
-    if (event.origin !== config.origin && !isLocalHost(event.origin)) {
-      return;
-    }
     const action = event.data as AnyAction;
     if (typeof action.type === 'string' && typeof action.payload === 'object') {
       switch (action.type) {
