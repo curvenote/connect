@@ -36,7 +36,9 @@ export function registerIFrameListener(config: Config, store: Store, renderer: C
               store.dispatch(renderStart());
               renderer(document.body, content);
               store.dispatch(renderComplete());
-              // NOTE: resize observer is responsible for sending size
+              commsDispatch(
+                connectIFrameSendSize(window.name, Math.ceil(document.body.clientHeight)),
+              );
             } catch (err) {
               commsDispatch(
                 connectIFrameSendFailed(
