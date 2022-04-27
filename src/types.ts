@@ -35,4 +35,4 @@ export interface IFrameSendFailedAction extends AnyAction {
   };
 }
 
-export type ContentRenderFn = (el: HTMLElement, content: any) => void;
+export type ContentRenderFn = (el: HTMLElement, content: any) => Promise<void>;

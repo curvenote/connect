@@ -34,7 +34,7 @@ export function registerIFrameListener(config: Config, store: Store, renderer: C
             const { content } = (action as HostSendContentAction).payload;
             try {
               store.dispatch(renderStart());
-              renderer(document.body, content);
+              await renderer(document.body, content);
               store.dispatch(renderComplete());
               commsDispatch(
                 connectIFrameSendSize(window.name, Math.ceil(document.body.clientHeight)),
