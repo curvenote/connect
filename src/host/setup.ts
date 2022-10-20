@@ -18,6 +18,7 @@ export function registerHostListener(store: Store) {
   function receiveMessage(event: MessageEvent) {
     const action = event.data as AnyAction;
     const iframe = document.getElementsByName(action.payload?.id)[0] as HTMLIFrameElement;
+    console.debug(`host received ${action.type} action`, action);
     if (
       !action.payload ||
       iframe == null ||
@@ -27,8 +28,12 @@ export function registerHostListener(store: Store) {
     }
     if (typeof action.payload === 'object') {
       switch (action.type) {
-        case CONNECT_IFRAME_SEND_READY:
         case CONNECT_IFRAME_SEND_SIZE:
+          console.debug(
+            `host received { width: ${action.payload.width}, height: ${action.payload.height} })`,
+            action,
+          );
+        case CONNECT_IFRAME_SEND_READY:
         case CONNECT_IFRAME_SEND_FAILED:
           store.dispatch(action);
           break;
