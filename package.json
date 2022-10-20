@@ -1,6 +1,6 @@
 {
   "name": "@curvenote/connect",
-  "version": "0.0.6",
+  "version": "0.0.7-rc0",
   "description": "Communicate with iframes that want to render Jupyter outputs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

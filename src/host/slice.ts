@@ -10,9 +10,9 @@ import type { AnyAction } from 'redux';
 */
 export interface HostStateItem {
   ready: boolean;
+  error: boolean;
   width: number | null;
   height: number | null;
-  error: boolean;
   message?: string;
 }
 
@@ -28,10 +28,11 @@ export function reducer(state: HostState = {}, action: AnyAction) {
       return {
         ...state,
         [id]: {
+          ...state[id],
           ready: true,
-          height: null,
-          width: null,
           error: false,
+          width: null,
+          height: null,
         },
       };
     }
@@ -65,9 +66,16 @@ export function reducer(state: HostState = {}, action: AnyAction) {
 }
 
 export const selectors = {
-  selectIFrameReady: (state: HostState, id: string) => state[id] && state[id].ready,
-  selectIFrameSize: (state: HostState, id: string) =>
-    state[id] && { width: state[id].width, height: state[id].height }, // TODO memoize
+  selectIFrameReady: (state: HostState, id: string): Boolean => state[id] && state[id].ready,
+  selectIFrame: (state: HostState, id: string): HostStateItem | undefined => state[id],
+  selectIFrameSize: (
+    state: HostState,
+    id: string,
+  ): Pick<HostStateItem, 'width' | 'height'> | undefined =>
+    state[id] && {
+      width: state[id].width,
+      height: state[id].height,
+    },
   selectIFrameFailed: (state: HostState, id: string) =>
     state[id] && state[id].error && { message: state[id].message },
 };

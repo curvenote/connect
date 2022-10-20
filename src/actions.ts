@@ -2,6 +2,13 @@
  * These actions are used in communication between the host and the iframe.
  */
 
+import type {
+  IFrameSendFailedAction,
+  HostSendContentAction,
+  IFrameSendReadyAction,
+  IFrameSendSizeAction,
+} from './types';
+
 export const CONNECT_HOST_SEND_CONTENT = 'CONNECT_HOST_SEND_CONTENT';
 export const CONNECT_IFRAME_SEND_SIZE = 'CONNECT_IFRAME_SEND_SIZE';
 export const CONNECT_IFRAME_SEND_READY = 'CONNECT_IFRAME_SEND_READY';
@@ -16,7 +23,7 @@ export const CONNECT_IFRAME_SEND_FAILED = 'CONNECT_IFRAME_SEND_FAILED';
  * @param content
  * @returns
  */
-export function connectHostSendContent(id: string, content: any) {
+export function connectHostSendContent(id: string, content: any): HostSendContentAction {
   return {
     type: CONNECT_HOST_SEND_CONTENT,
     payload: {
@@ -33,10 +40,14 @@ export function connectHostSendContent(id: string, content: any) {
  *
  * @param id
  * @param height
- * @param width
+ * @param width (optional)
  * @returns
  */
-export function connectIFrameSendSize(id: string, height: number, width: number) {
+export function connectIFrameSendSize(
+  id: string,
+  height: number | null,
+  width: number | null,
+): IFrameSendSizeAction {
   return {
     type: CONNECT_IFRAME_SEND_SIZE,
     payload: {
@@ -55,7 +66,7 @@ export function connectIFrameSendSize(id: string, height: number, width: number)
  * @param id
  * @returns
  */
-export function connectIFrameSendReady(id: string) {
+export function connectIFrameSendReady(id: string): IFrameSendReadyAction {
   return {
     type: CONNECT_IFRAME_SEND_READY,
     payload: {
@@ -73,7 +84,7 @@ export function connectIFrameSendReady(id: string) {
  * @param message
  * @returns
  */
-export function connectIFrameSendFailed(id: string, message: string) {
+export function connectIFrameSendFailed(id: string, message: string): IFrameSendFailedAction {
   return {
     type: CONNECT_IFRAME_SEND_FAILED,
     payload: {
