@@ -33,14 +33,16 @@ export function connectHostSendContent(id: string, content: any) {
  *
  * @param id
  * @param height
+ * @param width
  * @returns
  */
-export function connectIFrameSendSize(id: string, height: number) {
+export function connectIFrameSendSize(id: string, height: number, width: number) {
   return {
     type: CONNECT_IFRAME_SEND_SIZE,
     payload: {
       id,
       height,
+      width,
     },
   };
 }

@@ -17,6 +17,7 @@ export interface IFrameSendSizeAction extends AnyAction {
   payload: {
     id: string;
     height: number;
+    width: number;
   };
 }
 
